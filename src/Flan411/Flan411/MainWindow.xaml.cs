@@ -1,4 +1,5 @@
 ﻿using Flan411.Models;
+using Flan411.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,17 @@ namespace Flan411
     /// </summary>
     public partial class MainWindow : Window
     {
-        private UserModel user;
+        UserViewModel userModel = new UserViewModel();
 
         public MainWindow()
         {
-            this.user = null;
             InitializeComponent();
+            base.DataContext = userModel;
+        }
+
+        internal void SetUserName(string userName)
+        {
+            userModel.UserName = userName;
         }
     }
 }

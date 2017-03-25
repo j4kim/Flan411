@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flan411"
         xmlns:views = "clr-namespace:Flan411.Views"
+        xmlns:viewModels ="clr-namespace:Flan411.ViewModels"
         mc:Ignorable="d"
         Title="Flan411" Height="350" Width="525" Background="Gray">
+    <Window.DataContext>
+        <viewModels:UserViewModel/>
+    </Window.DataContext>
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <views:LoginView x:Name="LoginViewControl"></views:LoginView>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding UserName}" Width="200" MinWidth="200" MaxWidth="200" />
+            <Label Content="{Binding Token}" Width="200" MinWidth="200" MaxWidth="200" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -59,8 +59,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\TorrentModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\Torrent.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\TorrentViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
