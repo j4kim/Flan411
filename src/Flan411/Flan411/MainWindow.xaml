@@ -8,11 +8,15 @@
         xmlns:viewModels ="clr-namespace:Flan411.ViewModels"
         mc:Ignorable="d"
         Title="Flan411" Height="350" Width="525" Background="Gray">
+    <!-- Kind of container used to store user's infromation and share it between all views -->
     <Window.DataContext>
         <viewModels:UserViewModel/>
     </Window.DataContext>
+    <!-- Views are instanciated here -->
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!-- LoginView as a first example -->
         <views:LoginView x:Name="LoginViewControl"></views:LoginView>
+        <!-- Databinding used for DEBUG -->
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding UserName}" Width="200" MinWidth="200" MaxWidth="200" />
             <Label Content="{Binding Token}" Width="200" MinWidth="200" MaxWidth="200" />

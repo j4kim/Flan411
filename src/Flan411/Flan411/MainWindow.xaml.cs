@@ -29,10 +29,5 @@ namespace Flan411
             InitializeComponent();
             base.DataContext = userModel;
         }
-
-        internal void SetUserName(string userName)
-        {
-            userModel.UserName = userName;
-        }
     }
 }
