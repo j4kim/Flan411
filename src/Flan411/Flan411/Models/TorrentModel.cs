@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flan411.Models
 {
-    class TorrentModel
+    public class TorrentModel
     {
     }
 }

@@ -11,14 +11,15 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Please login to T411" HorizontalContentAlignment="Center" MinWidth="500" MaxWidth="500" FontWeight="Bold" FontSize="48"></Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Login" Margin="0,0,70,0" FontSize="24"></Label>
-                <TextBox Width="60" MinWidth="250" MaxWidth="300" FontSize="24"></TextBox>
+            <StackPanel Orientation="Horizontal" FocusManager.FocusedElement="{Binding ElementName=userNameTextBox}">
+                <Label Content="Username" Margin="0,0,70,0" FontSize="24"></Label>
+                <TextBox x:Name="userNameTextBox" Width="60" MinWidth="250" MaxWidth="300" FontSize="24"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Password" Margin="0,0,30,0" FontSize="24"></Label>
-                <PasswordBox Width="60" MinWidth="250" MaxWidth="300" FontSize="24"></PasswordBox>
+                <Label Content="Password" Margin="0,0,78,0" FontSize="24"></Label>
+                <PasswordBox x:Name="passwordTextBox" Width="60" MinWidth="250" MaxWidth="300" FontSize="24"></PasswordBox>
             </StackPanel>
+            <Button x:Name="loginButton" Content="Login" Margin="0,20,0,0" MinWidth="100" Width="100" FontWeight="Bold" FontSize="24" MaxWidth="100" Background="#FF2E79CB" Click="LoginButton_Click" IsDefault="True"/>
         </StackPanel>
     </Grid>
 </UserControl>
