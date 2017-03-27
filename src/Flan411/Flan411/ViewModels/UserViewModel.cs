@@ -15,51 +15,7 @@ namespace Flan411.ViewModels
         #endregion
 
         #region Properties
-        public User User
-        {
-            get { return user; }
-            set { user = value; }
-        }
-
-        public string UserName
-        {
-            get { return user.UserName; }
-            set
-            {
-                user.UserName = value;
-                RaisePropertyChanged("UserName");
-            }
-        }
-
-        public string Password
-        {
-            get { return user.Password; }
-            set
-            {
-                user.Password = value;
-                RaisePropertyChanged("Password");
-            }
-        }
-
-        public string Token
-        {
-            get { return user.Token; }
-            set
-            {
-                user.Token = value;
-                RaisePropertyChanged("Token");
-            }
-        }
-
-        public int Uid
-        {
-            get { return user.Uid; }
-            set
-            {
-                user.Uid = value;
-                RaisePropertyChanged("Uid");
-            }
-        }
+        public User User { get; set; }     
         #endregion
 
         #region Constructors

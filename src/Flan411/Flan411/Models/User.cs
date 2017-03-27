@@ -8,57 +8,29 @@ namespace Flan411.Models
 {
     public class User
     {
-        #region Attributes
-        private string userName;
-        private string password;
-        private string token;
-        private int uid;
-        #endregion
-
         #region Properties
-
-        public string UserName
-        {
-            get { return userName; }
-            set { userName = value; }
-        }
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
-        public string Token
-        {
-            get { return token; }
-            set { token = value; }
-        }
-        public int Uid
-        {
-            get { return uid; }
-            set { uid = value; }
-        }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Token { get; set; }
+        public int Uid { get; set; }
         #endregion
 
         #region Constructors
-        public User()
-        {
-            userName = password = token = "Undefined";
-            uid = 0;
-        }
+        public User() { }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
+        /// <param name="userName">T411 user's name</param>
+        /// <param name="password">T411 user's password</param>
         /// <param name="token">T411 API's authentication token</param>
         /// <param name="uid">User id</param>
         public User(string userName, string password, string token, int uid)
         {
-            this.userName = userName;
-            this.password = password;
-            this.token = token;
-            this.uid = uid;
-        }  
+            UserName = userName;
+            Password = password;
+            Token = token;
+            Uid = uid;
+        }
         #endregion
     }
 }

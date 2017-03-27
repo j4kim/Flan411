@@ -26,7 +26,7 @@ namespace Flan411.Views
     public partial class LoginView : UserControl
     {
         #region Attributes
-        static private readonly string AUTHENTICATION_URL = "https://api.t411.li/auth";
+        static private readonly string AUTHENTICATION_URL = "https://api.t411.ai/auth";
         #endregion
         #region Properties
         #endregion
@@ -46,14 +46,6 @@ namespace Flan411.Views
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                // Retrieve the parents datacontext to update it
-                UserViewModel flan411Container = DataContext as UserViewModel;
-
-                if (flan411Container == null) // If container cannot be casted
-                {
-                    Console.WriteLine($"Error in {this.GetType().Name}::AuthenticateUser", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-
                 // Prepare POST parameters
                 FormUrlEncodedContent formContent = new FormUrlEncodedContent(new[]
                 {
@@ -77,23 +69,30 @@ namespace Flan411.Views
                 // If we get the token, we update the datacontext and return the User model
                 if (jsonResponseObject["token"] != null)
                 {
-                    flan411Container.UserName = userName;
-                    flan411Container.Password = password;
-                    flan411Container.Token = (string)jsonResponseObject["token"];
-                    flan411Container.Uid = (int)jsonResponseObject["uid"];
-                    //flan411Container.User = new User(userName, password, (string)jsonResponseObject["token"], (int)jsonResponseObject["uid"]);
-                    return flan411Container.User;
+                    // Update application's authentication information
+                    Application.Current.Properties["UserName"] = userName;
+                    Application.Current.Properties["Password"] = password;
+                    Application.Current.Properties["Token"] = (string)jsonResponseObject["token"];
+                    Application.Current.Properties["Uid"] = (int)jsonResponseObject["uid"];
+
+                    // DEBUG
+                    Console.WriteLine($"Token from properties: {Application.Current.Properties["Token"]}");
+
+                    return new User(userName, password, (string)jsonResponseObject["token"], (int)jsonResponseObject["uid"]);
                 }
             }
 
             return null;
         }
 
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async Task<User> Login(string userName, string password)
         {
-            if (userNameTextBox.Text != null && passwordTextBox.Password != null)
+            User user = null;
+
+            try
             {
-                User user = await AuthenticateUser(userNameTextBox.Text, passwordTextBox.Password);
+                user = await AuthenticateUser(userName, password);
+
                 if (user != null)
                 {
                     MessageBox.Show($"Your token: {user.Token}", "Authentication successful", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -102,6 +101,20 @@ namespace Flan411.Views
                 {
                     MessageBox.Show("Username or password might be incorrect", "Authentication failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+            catch (HttpRequestException httpError)
+            {
+                MessageBox.Show($"{httpError.Message}", "Connection to remote server failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+            return user;
+        }
+
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userNameTextBox.Text != null && passwordTextBox.Password != null)
+            {
+                await Login(userNameTextBox.Text, passwordTextBox.Password);
             }
             else
             {
