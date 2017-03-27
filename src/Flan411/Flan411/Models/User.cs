@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Flan411.Models
+﻿namespace Flan411.Models
 {
     public class User
     {
         #region Properties
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Token { get; set; }
-        public int Uid { get; set; }
+        public string UserName;
+        public string Password;
+        public string Token;
+        public int Uid;
         #endregion
 
         #region Constructors

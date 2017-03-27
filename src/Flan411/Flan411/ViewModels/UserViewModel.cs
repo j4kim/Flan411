@@ -1,46 +1,28 @@
 ﻿using Flan411.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Flan411.Tools;
 
 namespace Flan411.ViewModels
 {
-    class UserViewModel : INotifyPropertyChanged
+    class UserViewModel : ObservableObject
     {
-        #region Attributes
-        User user;
-        #endregion
-
         #region Properties
-        public User User { get; set; }     
+
+        public User User;     
+        
         #endregion
 
         #region Constructors
+
         public UserViewModel()
         {
-            user = new User();
+            User = new User();
         }
 
         public UserViewModel(User user)
         {
-            this.user = user;
+            User = user;
         }
 
         #endregion
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // Create the OnPropertyChanged method to raise the event
-        protected void RaisePropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
-        }
     }
 }
