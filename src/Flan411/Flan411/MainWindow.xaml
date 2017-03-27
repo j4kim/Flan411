@@ -15,7 +15,7 @@
     <!-- Views are instanciated here -->
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <!-- LoginView as a first example -->
-        <views:LoginView x:Name="LoginViewControl"></views:LoginView>
+        <views:MainView x:Name="LoginViewControl"></views:MainView>
         <!-- Databinding used for DEBUG -->
         <!--<StackPanel Orientation="Horizontal">
             <Label Content="{Binding UserName}" Width="200" MinWidth="200" MaxWidth="200" />
