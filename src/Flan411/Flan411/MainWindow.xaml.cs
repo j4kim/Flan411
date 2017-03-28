@@ -8,12 +8,11 @@ namespace Flan411
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserViewModel userModel = new UserViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
-            base.DataContext = userModel;
+            DataContext = new NavigationViewModel();
+            ((NavigationViewModel)DataContext).SelectedViewModel = new LoginViewModel();
         }
     }
 }
