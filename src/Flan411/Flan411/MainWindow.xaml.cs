@@ -12,7 +12,16 @@ namespace Flan411
         {
             InitializeComponent();
             base.DataContext = new NavigationViewModel();
-            ((NavigationViewModel)DataContext).SelectedViewModel = new LoginViewModel();
+            NavigationViewModel navigationViewModel = base.DataContext as NavigationViewModel;
+            /*
+             * DEBUG: for navigation only. We need to verify if user already authenticated once
+             * (check if the credentials are present in a configuration file or a registry ...)
+             * if no credentials are found selectedViweModel = LoginViewModel. Else,
+             * selectedViweModel = SearchViewModel.
+             **/
+            {
+                navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
+            }
         }
     }
 }
