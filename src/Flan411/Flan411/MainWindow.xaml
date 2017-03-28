@@ -9,10 +9,10 @@
         mc:Ignorable="d"
         Title="Flan411" Height="350" Width="525" Background="Gray">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type views:LoginView}">
+        <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
             <views:LoginView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type views:SearchView}">
+        <DataTemplate DataType="{x:Type viewModels:SearchViewModel}">
             <views:SearchView/>
         </DataTemplate>
     </Window.Resources>
