@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Flan411.Tools
         static private readonly string HOST_NAME = "https://api.t411.ai";
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
 
+        static private readonly string TOKEN_FILENAME = ".token";
         static private string TOKEN = "";
 
         /// <summary>
@@ -58,6 +60,8 @@ namespace Flan411.Tools
                 if (jsonResponseObject["token"] != null)
                 {
                     TOKEN = (string)jsonResponseObject["token"];
+                    // write the token on the configuration file
+                    File.WriteAllText(TOKEN_FILENAME, TOKEN);
                     return new User { UserName = userName, Password = password, Token = TOKEN, Uid = (int)jsonResponseObject["uid"] };
                 }
             }
@@ -65,6 +69,11 @@ namespace Flan411.Tools
             return null;
         }
 
+        /// <summary>
+        /// Makes a search request on the t411 engine
+        /// </summary>
+        /// <param name="pattern">The query</param>
+        /// <returns>A list of torrent objects (10 max by default)</returns>
         public static List<Torrent> Search(string pattern)
         {
             using (HttpClient http = new HttpClient())
@@ -72,15 +81,21 @@ namespace Flan411.Tools
                 // Necessary header for each request, should we have only one instance of HttpClient ?
                 http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
-                /*
-                 * limites et pagination : /torrents/search/{query}?offset=10&limit=5
-                 */
+                // limit and pagination : /torrents/search/{query}?offset=10&limit=5
+                // 10 results by default
                 Task<string> task = http.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}");
-                Console.WriteLine("je cherche couz");
                 task.Wait();
                 JObject result = JsonConvert.DeserializeObject(task.Result) as JObject;
-                Console.WriteLine(result);
-                
+
+                // the error field occurs if the token is invalid
+                if (result["error"] != null)
+                    //throw new Exception(result["error"].ToString());
+                    return null;
+
+
+                // debug
+                File.WriteAllText("result.json", result.ToString());
+
                 List<Torrent> torrents = new List<Torrent>();
                 foreach (var tor in result["torrents"])
                 {
@@ -91,6 +106,24 @@ namespace Flan411.Tools
             }
         }
 
-
+        /// <summary>
+        /// Verify if the configuration file exists and test the validity of the token
+        /// </summary>
+        /// <returns>true if the token exists and is valid, false otherwise</returns>
+        public static bool VerifyToken()
+        {
+            try
+            {
+                TOKEN = File.ReadAllText(TOKEN_FILENAME);
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
+            // check token validity
+            // if the token is invalid, the search method will return null
+            // maybe we can test with a faster request (get on the user profile, for example)
+            return Search("test") != null;
+        }
     }
 }

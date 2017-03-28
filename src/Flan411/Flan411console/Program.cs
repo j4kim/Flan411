@@ -12,9 +12,9 @@ namespace Flan411console
     {
         static void Main(string[] args)
         {
-            // todo: check if we already have a valid token 
-            string token = auth();
-
+            if (!T411Service.VerifyToken())
+                auth();
+            
             while (true)
             {
                 Console.Write("Search: ");
@@ -48,6 +48,7 @@ namespace Flan411console
                     break;
                 pwd += key.KeyChar;
             }
+            Console.WriteLine();
 
             User user = T411Service.AuthenticateUser(userName, pwd).Result;
             return user.Token;
