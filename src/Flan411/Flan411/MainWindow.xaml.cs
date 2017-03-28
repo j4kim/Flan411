@@ -8,12 +8,20 @@ namespace Flan411
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserViewModel userModel = new UserViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
-            base.DataContext = userModel;
+            base.DataContext = new NavigationViewModel();
+            NavigationViewModel navigationViewModel = base.DataContext as NavigationViewModel;
+            /*
+             * DEBUG: for navigation only. We need to verify if user already authenticated once
+             * (check if the credentials are present in a configuration file or a registry ...)
+             * if no credentials are found selectedViweModel = LoginViewModel. Else,
+             * selectedViweModel = SearchViewModel.
+             **/
+            {
+                navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
+            }
         }
     }
 }

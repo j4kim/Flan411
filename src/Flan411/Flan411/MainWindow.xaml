@@ -8,18 +8,22 @@
         xmlns:viewModels ="clr-namespace:Flan411.ViewModels"
         mc:Ignorable="d"
         Title="Flan411" Height="350" Width="525" Background="Gray">
-    <!-- Kind of container used to store user's infromation and share it between all views -->
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+            <views:LoginView DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:SearchViewModel}">
+            <views:SearchView DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Window.DataContext>
-        <viewModels:UserViewModel/>
+        <viewModels:NavigationViewModel/>
     </Window.DataContext>
-    <!-- Views are instanciated here -->
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <!-- LoginView as a first example -->
-        <views:MainView x:Name="LoginViewControl"></views:MainView>
-        <!-- Databinding used for DEBUG -->
-        <!--<StackPanel Orientation="Horizontal">
-            <Label Content="{Binding UserName}" Width="200" MinWidth="200" MaxWidth="200" />
-            <Label Content="{Binding Token}" Width="200" MinWidth="200" MaxWidth="200" />
-        </StackPanel>-->
-    </Grid>
+    <DockPanel LastChildFill="True">
+        <StackPanel x:Name="navigation" DockPanel.Dock="Left">
+            <Button Content="Login" Command="{Binding LoginCommand}"></Button>
+            <Button Content="Search" Command="{Binding SearchCommand}"></Button>
+        </StackPanel>
+        <ContentControl x:Name="Pages" DockPanel.Dock="Right" Content="{Binding SelectedViewModel}"></ContentControl>
+    </DockPanel>
 </Window>
