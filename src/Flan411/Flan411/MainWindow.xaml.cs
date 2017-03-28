@@ -11,7 +11,7 @@ namespace Flan411
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new NavigationViewModel();
+            base.DataContext = new NavigationViewModel();
             ((NavigationViewModel)DataContext).SelectedViewModel = new LoginViewModel();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Flan411.Models;
 using Flan411.Tools;
+using Flan411.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Net.Http;
@@ -42,7 +43,7 @@ namespace Flan411.Views
                         string methodeName = new StackTrace().GetFrame(1).GetMethod().Name;
                         Console.WriteLine($"{className}::{methodeName} Token from properties: {Application.Current.Properties["Token"]}");
                     }
-                    
+
                     MessageBox.Show($"Your token: {user.Token}", "Authentication successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -54,15 +55,31 @@ namespace Flan411.Views
             {
                 MessageBox.Show($"{httpError.Message}", "Connection to remote server failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
             return user;
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (userNameTextBox.Text != null && passwordTextBox.Password != null)
+            if (userNameTextBox.Text.Length > 0 && passwordTextBox.Password.Length > 0)
             {
-                await Login(userNameTextBox.Text, passwordTextBox.Password);
+                NavigationViewModel nav = DataContext as NavigationViewModel;
+
+                if (nav == null)
+                {
+                    // DEBUG
+                    {
+                        MessageBox.Show($"Error::no NavigationViewModel accessible");
+                        return;
+                    }
+                }
+
+                User user = await Login(userNameTextBox.Text, passwordTextBox.Password);
+
+                if (user != null)
+                {
+                    nav.SelectedViewModel = new SearchViewModel();
+                }
             }
             else
             {

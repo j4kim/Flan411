@@ -6,10 +6,6 @@ namespace Flan411.ViewModels
 {
     class LoginViewModel : ObservableObject
     {
-        #region Constructors
-
         public LoginViewModel(){}
-
-        #endregion
     }
 }
