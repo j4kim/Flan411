@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flan411", "Flan411\Flan411.csproj", "{9A35C057-23A7-4C24-8958-D270335342CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flan411console", "Flan411console\Flan411console.csproj", "{0603D12E-A8A9-4A86-87C1-84432D586C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9A35C057-23A7-4C24-8958-D270335342CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A35C057-23A7-4C24-8958-D270335342CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A35C057-23A7-4C24-8958-D270335342CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0603D12E-A8A9-4A86-87C1-84432D586C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0603D12E-A8A9-4A86-87C1-84432D586C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0603D12E-A8A9-4A86-87C1-84432D586C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0603D12E-A8A9-4A86-87C1-84432D586C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
