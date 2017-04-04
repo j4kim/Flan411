@@ -33,7 +33,7 @@ namespace Flan411.Views
             {
                 return;
             }
-            var torrentsList = T411Service.Search("Avatar");
+            var torrentsList = T411Service.Search(searchInput.Text);
             // DEBUG
             {
                 foreach (var item in torrentsList)

@@ -84,6 +84,12 @@ namespace Flan411.Tools
                 // 10 results by default
                 Task<string> task = http.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}");
                 task.Wait();
+
+                if (task.Result == null)
+                {
+                    return null;
+                }
+
                 JObject result = JsonConvert.DeserializeObject(task.Result) as JObject;
 
                 // the error field occurs if the token is invalid

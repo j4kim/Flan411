@@ -8,22 +8,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-            <ItemsControl Name="torrentResultList">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,0,0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Seeders}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <!--<Label Content="Search results should be here!" FontSize="24" FontWeight="Bold" />-->
-        </StackPanel>
+        <ListBox Width="500" Height="350" Name="torrentResultList">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Text="{Binding Seeders, StringFormat='{}{0} Seeders'}" Margin="0,5,10,0"/>
+                            <TextBlock Text="{Binding Leechers, StringFormat='{}{0} Leechers'}" Margin="0,5,10,0" />
+                            <TextBlock Text="{Binding SizeMB, StringFormat='{}{0} MB'}" Margin="0,5,10,0"/>
+                            <!--<Button>Download</Button>-->
+                        </StackPanel>
+                        <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
