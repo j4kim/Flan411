@@ -20,7 +20,10 @@ namespace Flan411console
                 Console.Write("Search: ");
                 string pattern = Console.ReadLine();
 
-                List<Torrent> results = T411Service.Search(pattern);
+                var task = T411Service.Search(pattern);
+                task.Wait();
+
+                List<Torrent> results = task.Result;
 
                 Console.WriteLine("Results: ");
                 foreach (var t in results)

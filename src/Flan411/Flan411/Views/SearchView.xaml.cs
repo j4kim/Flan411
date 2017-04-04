@@ -27,13 +27,13 @@ namespace Flan411.Views
             searchButton.Click += SearchButton_Click;
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             if (searchInput.Text == "")
             {
                 return;
             }
-            var torrentsList = T411Service.Search("Avatar");
+            var torrentsList = await T411Service.Search("Avatar");
             // DEBUG
             {
                 foreach (var item in torrentsList)

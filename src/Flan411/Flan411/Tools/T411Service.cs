@@ -73,24 +73,22 @@ namespace Flan411.Tools
         /// </summary>
         /// <param name="pattern">The query</param>
         /// <returns>A list of torrent objects (10 max by default)</returns>
-        public static List<Torrent> Search(string pattern)
+        public static async Task<List<Torrent>> Search(string pattern)
         {
             using (HttpClient http = new HttpClient())
             {
                 // Necessary header for each request, should we have only one instance of HttpClient ?
                 http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
-                // limit and pagination : /torrents/search/{query}?offset=10&limit=5
-                // 10 results by default
-                Task<string> task = http.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}");
-                task.Wait();
-                JObject result = JsonConvert.DeserializeObject(task.Result) as JObject;
+                string options = "?limit=5000";
+                string strResult = await http.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
+
+                JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)
                     //throw new Exception(result["error"].ToString());
                     return null;
-
 
                 // debug
                 File.WriteAllText("result.json", result.ToString());
@@ -98,8 +96,15 @@ namespace Flan411.Tools
                 List<Torrent> torrents = new List<Torrent>();
                 foreach (var tor in result["torrents"])
                 {
-                    Torrent torrent = JsonConvert.DeserializeObject<Torrent>(tor.ToString());
-                    torrents.Add(torrent);
+                    try
+                    {
+                        Torrent torrent = tor.ToObject<Torrent>();
+                        torrents.Add(torrent);
+                    }
+                    catch (JsonReaderException e)
+                    {
+                        Console.WriteLine(e.Data);
+                    }
                 }
                 return torrents;
             }
