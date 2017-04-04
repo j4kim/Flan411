@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flan411.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace Flan411.Views
         public SearchView()
         {
             InitializeComponent();
+            searchButton.Click += SearchButton_Click;
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (searchInput.Text == "")
+            {
+                return;
+            }
+            var torrentsList = T411Service.Search("Avatar");
+            // DEBUG
+            {
+                foreach (var item in torrentsList)
+                {
+                    Console.WriteLine($"seeders: {item.Seeders}");
+                }
+            }
+            torrentListView.TorrentList = torrentsList;
         }
     }
 }

@@ -1,17 +1,6 @@
-﻿using System;
+﻿using Flan411.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Flan411.Views
 {
@@ -20,9 +9,23 @@ namespace Flan411.Views
     /// </summary>
     public partial class TorrentListView : UserControl
     {
+        public List<Torrent> TorrentList
+        {
+            get
+            {
+                return torrentList;
+            }
+            set
+            {
+                torrentList = value;
+                torrentResultList.ItemsSource = torrentList;
+            }
+        }
+        private List<Torrent> torrentList;
         public TorrentListView()
         {
             InitializeComponent();
+            torrentList = new List<Torrent>();
         }
     }
 }
