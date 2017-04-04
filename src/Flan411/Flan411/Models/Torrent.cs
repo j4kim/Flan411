@@ -1,4 +1,6 @@
-﻿namespace Flan411.Models
+﻿using System;
+
+namespace Flan411.Models
 {
     public class Torrent
     {
@@ -10,5 +12,7 @@
         public string Leechers { get; set; }
         public string Size { get; set; }
         public string CategoryName { get; set; }
+
+        public long SizeMB { get { return Convert.ToInt64(Size) / 1000000; } }
     }
 }
