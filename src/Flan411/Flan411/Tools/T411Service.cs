@@ -26,7 +26,7 @@ namespace Flan411.Tools
         /// <returns>User instance if authentication succeeded, false otherwise.</returns>
         static public async Task<User> AuthenticateUser(string userName, string password)
         {
-            using (HttpClient httpClient = new HttpClient())
+            using (var httpClient = new HttpClient())
             {
                 // Prepare POST parameters
                 FormUrlEncodedContent formContent = new FormUrlEncodedContent(new[]
@@ -38,7 +38,7 @@ namespace Flan411.Tools
                 // Send HTTP POST request and retrieve content as a string
                 HttpResponseMessage response = await httpClient.PostAsync(AUTHENTICATION_URL, formContent);
                 string content = await response.Content.ReadAsStringAsync();
-                
+
                 // Cast content as a JSON object to make information processing easier
                 JObject jsonResponseObject = JsonConvert.DeserializeObject(content) as JObject;
 
@@ -75,25 +75,33 @@ namespace Flan411.Tools
         /// <returns>A list of torrent objects (10 max by default)</returns>
         public static async Task<List<Torrent>> Search(string pattern)
         {
-            using (HttpClient http = new HttpClient())
+            using (var httpClient = new HttpClient())
             {
+                List<Torrent> torrents = new List<Torrent>();
+
                 // Necessary header for each request, should we have only one instance of HttpClient ?
-                http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
                 string options = "?limit=5000";
-                string strResult = await http.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
+                string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)
-                    //throw new Exception(result["error"].ToString());
-                    return null;
+                {
+                    // DEBUG: often SQLSTATE[HY000] [2002] Connection refused
+                    {
+                        Console.WriteLine($"Error in search: {result["error"]}");
+                    }
+                    return torrents;
+                }
 
-                // debug
-                File.WriteAllText("result.json", result.ToString());
+                // DEBUG
+                {
+                    File.WriteAllText("result.json", result.ToString());
+                }
 
-                List<Torrent> torrents = new List<Torrent>();
                 foreach (var tor in result["torrents"])
                 {
                     try
@@ -107,6 +115,15 @@ namespace Flan411.Tools
                     }
                 }
                 return torrents;
+                // DEBUG in case of API unavailability
+                //{
+                //    return new List<Torrent>
+                //    {
+                //        new Torrent() {Name="The cat and the dog", Seeders="12", Leechers="6", Size="120000000000" },
+                //        new Torrent() {Name="The ground and the sky", Seeders="36", Leechers="16", Size="324000000000" },
+                //        new Torrent() {Name="John Doe's gravestone", Seeders="12", Leechers="6", Size="150000000000" },
+                //    };
+                //}
             }
         }
 

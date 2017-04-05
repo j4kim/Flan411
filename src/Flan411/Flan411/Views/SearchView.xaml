@@ -31,12 +31,10 @@
             <Button Name="searchButton" Grid.Column="1" Grid.Row="0" Content="Search" FontWeight="Bold" />-->
         </Grid>
         <local:TorrentListView x:Name="torrentListView" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0"></local:TorrentListView>
-        <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center">-->
-        <!--<StackPanel Orientation="Horizontal">
-            <TextBox Name="searchInput" MinWidth="300" MaxWidth="300" Margin="0,50,0,0" MinHeight="30" MaxHeight="30" FontSize="16" />
-            <Button Name="searchButton" Content="Search" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" MaxWidth="60" FontSize="16"/>
-        </StackPanel>-->
-        <!--<local:TorrentListView x:Name="torrentListView" Margin="0,10,0,0"></local:TorrentListView>-->
-        <!--</StackPanel>-->
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+            <TextBlock Name="informationText" >
+                No torrents found
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>

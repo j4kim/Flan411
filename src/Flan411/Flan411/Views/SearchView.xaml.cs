@@ -1,18 +1,7 @@
 ﻿using Flan411.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Flan411.Views
 {
@@ -25,6 +14,25 @@ namespace Flan411.Views
         {
             InitializeComponent();
             searchButton.Click += SearchButton_Click;
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DisplayInformationMessage("Please enter a search term.");
+        }
+
+        private void DisplayInformationMessage(String message)
+        {
+            torrentListView.Visibility = Visibility.Hidden;
+            informationText.Text = message;
+            informationText.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayTorrentsList()
+        {
+            informationText.Visibility = Visibility.Hidden;
+            torrentListView.Visibility = Visibility.Visible; 
         }
 
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -42,7 +50,16 @@ namespace Flan411.Views
                     Console.WriteLine($"seeders: {item.Seeders}");
                 }
             }
-            torrentListView.TorrentList = torrentsList;
+
+            if (torrentsList.Count > 0)
+            {
+                torrentListView.TorrentList = torrentsList;
+                DisplayTorrentsList();
+            }
+            else
+            {
+                DisplayInformationMessage("No torrents found.");
+            }
         }
     }
 }
