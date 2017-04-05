@@ -25,7 +25,7 @@
             <StackPanel HorizontalAlignment="Center" Margin="0,0,0,42.4">
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                     <TextBox Name="searchInput" MinWidth="300" MaxWidth="300" Margin="0,50,0,0" MinHeight="30" MaxHeight="30" FontSize="16" />
-                    <Button Name="searchButton" Content="Search" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" MaxWidth="60" FontSize="16"/>
+                    <Button Name="searchButton" Content="Search" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" MaxWidth="60" FontSize="16" IsDefault="True"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
