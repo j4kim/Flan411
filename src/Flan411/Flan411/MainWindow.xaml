@@ -21,10 +21,10 @@
     </Window.DataContext>
     <DockPanel LastChildFill="True">
         <!-- DEBUG -->
-        <!--<StackPanel x:Name="navigation" DockPanel.Dock="Left">
+        <StackPanel x:Name="navigation" DockPanel.Dock="Left">
             <Button Content="Login" Command="{Binding LoginCommand}"></Button>
             <Button Content="Search" Command="{Binding SearchCommand}"></Button>
-        </StackPanel>-->
+        </StackPanel>
         <ContentControl x:Name="Pages" DockPanel.Dock="Right" Content="{Binding SelectedViewModel}"></ContentControl>
     </DockPanel>
 </Window>

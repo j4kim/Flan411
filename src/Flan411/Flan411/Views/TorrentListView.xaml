@@ -8,29 +8,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListBox Width="500" Height="350" Name="torrentResultList">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox Name="torrentResultList" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Name}" />
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="{Binding Seeders, StringFormat='{}{0} Seeders'}" Margin="0,5,10,0"/>
                             <TextBlock Text="{Binding Leechers, StringFormat='{}{0} Leechers'}" Margin="0,5,10,0" />
                             <TextBlock Text="{Binding SizeMB, StringFormat='{}{0} MB'}" Margin="0,5,10,0"/>
-                            <!--<Button>Download</Button>-->
                         </StackPanel>
-                        <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
-                    </Grid>
+                        <Separator/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
