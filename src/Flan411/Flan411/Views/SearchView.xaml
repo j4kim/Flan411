@@ -12,7 +12,7 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="400"></ColumnDefinition>
+            <ColumnDefinition MinWidth="600"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Grid.Row="0">
@@ -25,7 +25,8 @@
             <StackPanel HorizontalAlignment="Center" Margin="0,0,0,42.4">
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                     <TextBox Name="searchInput" MinWidth="300" MaxWidth="300" Margin="0,50,0,0" MinHeight="30" MaxHeight="30" FontSize="16" />
-                    <Button Name="searchButton" Content="Search" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" MaxWidth="60" FontSize="16" IsDefault="True"/>
+                    <Button Name="searchTvShowBtn" Content="Search TV Show" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" FontSize="16"/>
+                    <Button Name="searchMovieBtn" Content="Search Movie" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" FontSize="16"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

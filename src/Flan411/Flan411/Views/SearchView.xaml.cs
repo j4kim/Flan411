@@ -13,7 +13,7 @@ namespace Flan411.Views
         public SearchView()
         {
             InitializeComponent();
-            searchButton.Click += SearchButton_Click;
+            searchTvShowBtn.Click += SearchButton_Click;
             Loaded += OnLoaded;
         }
 

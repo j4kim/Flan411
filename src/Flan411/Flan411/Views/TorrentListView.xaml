@@ -23,6 +23,7 @@
                             <TextBlock Text="{Binding Seeders, StringFormat='{}{0} Seeders'}" Margin="0,5,10,0"/>
                             <TextBlock Text="{Binding Leechers, StringFormat='{}{0} Leechers'}" Margin="0,5,10,0" />
                             <TextBlock Text="{Binding SizeMB, StringFormat='{}{0} MB'}" Margin="0,5,10,0"/>
+                            <TextBlock Text="{Binding CategoryName, StringFormat='{}Categories:{0}'}" Margin="0,5,10,0"/>
                         </StackPanel>
                         <Separator/>
                     </StackPanel>
