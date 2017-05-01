@@ -83,6 +83,7 @@ namespace Flan411.Tools
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
                 string options = "?limit=5000";
+
                 string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
@@ -91,10 +92,7 @@ namespace Flan411.Tools
                 if (result["error"] != null)
                 {
                     // DEBUG: often SQLSTATE[HY000] [2002] Connection refused
-                    {
-                        Console.WriteLine($"Error in search: {result["error"]}");
-                    }
-                    return torrents;
+                    return null;
                 }
 
                 // DEBUG
@@ -114,6 +112,7 @@ namespace Flan411.Tools
                         Console.WriteLine(e.Data);
                     }
                 }
+
                 return torrents;
                 // DEBUG in case of API unavailability
                 //{

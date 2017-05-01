@@ -7,7 +7,7 @@
         xmlns:views = "clr-namespace:Flan411.Views"
         xmlns:viewModels ="clr-namespace:Flan411.ViewModels"
         mc:Ignorable="d"
-        Title="Flan411" Height="350" Width="525" Background="Gray" MinWidth="720" MinHeight="480">
+        Title="Flan411" Height="350" Width="525" MinWidth="720" MinHeight="480" Background="#FFE6E6E6">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
             <views:LoginView DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"/>
@@ -19,12 +19,5 @@
     <Window.DataContext>
         <viewModels:NavigationViewModel/>
     </Window.DataContext>
-    <DockPanel LastChildFill="True">
-        <!-- DEBUG -->
-        <StackPanel x:Name="navigation" DockPanel.Dock="Left">
-            <Button Content="Login" Command="{Binding LoginCommand}"></Button>
-            <Button Content="Search" Command="{Binding SearchCommand}"></Button>
-        </StackPanel>
-        <ContentControl x:Name="Pages" DockPanel.Dock="Right" Content="{Binding SelectedViewModel}"></ContentControl>
-    </DockPanel>
+    <views:SearchView DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
 </Window>

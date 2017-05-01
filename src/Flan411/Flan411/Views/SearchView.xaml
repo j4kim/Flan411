@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Flan411.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="150"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -36,5 +36,21 @@
             </TextBlock>
         </StackPanel>
         <local:TorrentDetailsView Grid.Column="1"  Grid.Row="0" Grid.RowSpan="2"></local:TorrentDetailsView>
+    </Grid>-->
+    <Grid Margin="10">
+        <DockPanel >
+            <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,10">
+                <TextBox Name="searchInput" Width="200" ToolTip="Game of Thrones" />
+                <Button Name="searchButton" Width="60" Content="Search" />
+            </WrapPanel>
+            <local:TorrentListView x:Name="torrentListView" DockPanel.Dock="Left"></local:TorrentListView>
+            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+                <TextBlock Name="informationText" >
+                No torrents found
+                </TextBlock>
+            </StackPanel>
+            <local:TorrentDetailsView DockPanel.Dock="Right" Margin="10,0,0,0"></local:TorrentDetailsView>
+        </DockPanel>
     </Grid>
+    
 </UserControl>
