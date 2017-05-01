@@ -112,7 +112,7 @@ namespace Flan411.Tools
         /// </summary>
         /// <param name="pattern">The query</param>
         /// <returns>A list of torrent objects (10 max by default)</returns>
-        public static async Task<List<Torrent>> Search(string pattern)
+        public static async Task<List<Torrent>> Search(string pattern, int limit=5000, int cid=-1)
         {
             using (var httpClient = new HttpClient())
             {
@@ -121,7 +121,10 @@ namespace Flan411.Tools
                 // Necessary header for each request, should we have only one instance of HttpClient ?
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
-                string options = "?limit=5000";
+                string options = $"?limit={limit}";
+                if(cid != -1)
+                    // category id : Série TV -> 433, Film -> 631, Animation -> 455, Série animée -> 637
+                    options += $"&cid={cid}"; 
 
                 string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
@@ -148,7 +151,7 @@ namespace Flan411.Tools
                     }
                     catch (JsonReaderException e)
                     {
-                        Console.WriteLine(e.Data);
+                        Console.WriteLine(e);
                     }
                 }
 
@@ -164,6 +167,21 @@ namespace Flan411.Tools
                 //}
             }
         }
+
+        public static async Task<TorrentDetail> Details(int id)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
+                string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/details/{id}");
+
+                JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
+                TorrentDetail torrent = result.ToObject<TorrentDetail>();
+
+                return torrent;
+            }
+        }
+
 
         /// <summary>
         /// Verify if the configuration file exists and test the validity of the token
@@ -184,7 +202,7 @@ namespace Flan411.Tools
             // maybe we can test with a faster request (get on the user profile, for example)
             try
             {
-                Search("test");
+                Search("test",1);
                 return true;
             }
             catch(Exception e)

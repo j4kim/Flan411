@@ -29,10 +29,11 @@ namespace Flan411.Views
             InitializeComponent();
         }
 
-        private void setContent(Torrent torrent)
+        private async void setContent(Torrent torrent)
         {
-            // todo: display torrent details in a Grid (DataGrid ?)
-            // todo: load torrent details in the WebBrowser component 
+            wb.NavigateToString("Description downloading...");
+            TorrentDetail details = await T411Service.Details(int.Parse(torrent.Id));
+            wb.NavigateToString(details.Description);
         }
 
         private async void dlButton_Click(object sender, RoutedEventArgs e)

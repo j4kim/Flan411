@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\TorrentDetail.cs" />
     <Compile Include="Models\Torrent.cs" />
     <Compile Include="Models\TvMazeTvShowInfo.cs" />
     <Compile Include="Models\User.cs" />

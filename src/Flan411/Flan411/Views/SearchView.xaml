@@ -9,8 +9,8 @@
     <Grid Margin="10">
         <DockPanel >
             <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,10">
-                <TextBox Name="searchInput" Width="200" ToolTip="Game of Thrones" />
-                <Button Name="searchButton" Width="60" Content="Search" IsDefault="True"  />
+                <TextBox Name="searchInput" Width="200" FontSize="16"/>
+                <Button Name="searchButton"  Padding="10,2,10,2" Content="Search" IsDefault="True" FontSize="16"  />
             </WrapPanel>
             <Grid>
                 <Grid.ColumnDefinitions>

@@ -8,11 +8,40 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Visibility="Hidden"
              >
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+    <DockPanel >
+        <StackPanel DockPanel.Dock="Top">
             <TextBlock FontSize="16" Text="{Binding Name}" TextWrapping="WrapWithOverflow" FontWeight="Bold" Margin="0,0,0,20" />
-            <Button Name="dlButton" Click="dlButton_Click" Margin="0,0,0,20">Download</Button>
-            <WebBrowser Name="wb"></WebBrowser>
+            <Button Name="dlButton" FontSize="16" Click="dlButton_Click" Margin="0,0,0,20" Padding="10,2,10,2" HorizontalAlignment="Left">Download Torrent</Button>
+            <Grid HorizontalAlignment="Left" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Added:" FontWeight="Bold" HorizontalAlignment="Right" />
+                <Label Content="{Binding Added}" Grid.Column="1" />
+
+                <Label Content="Size:" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Right" />
+                <Label Content="{Binding SizeMB}" ContentStringFormat="{}{0} MB"  Grid.Column="1" Grid.Row="1" />
+
+                <Label Content="Seeders:" Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Right" />
+                <Label Content="{Binding Seeders}" Grid.Column="1" Grid.Row="2" />
+
+                <Label Content="Leechers:" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Right" />
+                <Label Content="{Binding Leechers}" Grid.Column="1" Grid.Row="3" />
+
+                <Label Content="Category:" Grid.Row="4" FontWeight="Bold" HorizontalAlignment="Right" />
+                <Label Content="{Binding CategoryName}" Grid.Column="1" Grid.Row="4" />
+            </Grid>
         </StackPanel>
-    </ScrollViewer>
+        <WebBrowser Name="wb" DockPanel.Dock="Bottom"></WebBrowser>
+
+    </DockPanel>
 </UserControl>
