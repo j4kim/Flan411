@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Flan411.Models
@@ -13,13 +14,17 @@ namespace Flan411.Models
         public string[] Genres;
         public string Status;
         public string PosterUrl;
-        public string Summary;
+        public string Summary {
+            get { return summary; }
+            set { summary = Regex.Replace(value, "<.*?>", String.Empty); }
+        }
         public ShowSchedule Schedule;
         public TvMazeEpisode[][] Episodes { get { return episodes; } }
         public int Seasons { get { return seasons; } }
 
         private TvMazeEpisode[][] episodes;
         private int seasons;
+        private string summary;
 
         internal void SetEpisodes(TvMazeEpisode[] tvMazeEpisode)
         {
@@ -70,7 +75,13 @@ namespace Flan411.Models
             public int Season;
             public int Number;
             public int Runtime;
-            public string Summary;
+            public string Summary
+            {
+                get { return summary; }
+                set { summary = Regex.Replace(value, "<.*?>", String.Empty); }
+            }
+
+            private string summary;
         }
     }
 }

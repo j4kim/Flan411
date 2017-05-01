@@ -35,8 +35,16 @@ namespace Flan411console
             //const int ID = 4578050;
             //T411Service.Download(ID, "tamaman.torrent");
 
-            var task = TvMazeService.Search("The walking dead");
-            task.Wait();
+            //var task = TvMazeService.Search("The walking dead");
+            try
+            {
+                var test = TvMazeService.Search("The walking dead").Result;
+            }
+            catch (AggregateException)
+            {
+                Console.WriteLine("Aucune information trouvée.");
+            }
+
 
             Console.WriteLine("FIN");
             Console.ReadKey();

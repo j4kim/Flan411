@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Flan411.Tools
@@ -29,17 +30,27 @@ namespace Flan411.Tools
             {
                 string strResult = await httpClient.GetStringAsync(url);
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
+                if (result == null)
+                {
+                    throw new Exception("No tv show found");
+                }
                 tvShowInfo = result.ToObject<TvMazeTvShowInfo>();
+                tvShowInfo.PosterUrl = result["image"]["medium"].ToString();
                 tvShowInfo.SetEpisodes(result["_embedded"]["episodes"].ToObject<List<TvMazeTvShowInfo.TvMazeEpisode>>().ToArray());
             }
 
             // Debug
             {
+                Console.WriteLine("TV SHOW INFOS:");
+                Console.WriteLine($"Time: {tvShowInfo.Schedule.Time}, Day: {tvShowInfo.Schedule.Days.Length}");
+                
+                Console.WriteLine("Episodes:");
                 foreach (var row in tvShowInfo.Episodes)
                 {
                     foreach (var col in row)
                     {
-                        Console.WriteLine(col.Name);
+                        Console.WriteLine($"name: {col.Name}");
+                        Console.WriteLine($"summary: {col.Summary}");
                     }
                 }
             }
