@@ -7,7 +7,7 @@
         xmlns:views = "clr-namespace:Flan411.Views"
         xmlns:viewModels ="clr-namespace:Flan411.ViewModels"
         mc:Ignorable="d"
-        Title="Flan411" Height="350" Width="525" MinWidth="720" MinHeight="480" Background="#FFE6E6E6">
+        Title="Flan411" MinWidth="720" MinHeight="480" Background="#FFE6E6E6">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
             <views:LoginView DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"/>

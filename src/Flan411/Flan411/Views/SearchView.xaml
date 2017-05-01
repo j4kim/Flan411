@@ -25,6 +25,6 @@
                 <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Left" Width="5" Grid.Column="1"/>
             </Grid>
         </DockPanel>
-    </Grid>
+        </Grid>
     
 </UserControl>
