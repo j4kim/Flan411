@@ -14,25 +14,31 @@ namespace Flan411.Models
         public string[] Genres;
         public string Status;
         public string PosterUrl;
-        public string Summary {
+        public string Summary
+        {
             get { return summary; }
             set { summary = Regex.Replace(value, "<.*?>", String.Empty); }
         }
         public ShowSchedule Schedule;
         public TvMazeEpisode[][] Episodes { get { return episodes; } }
         public int Seasons { get { return seasons; } }
+        public Dictionary<int, int> EpisodesBySeaons {
+            get { return episodesBySeason; }
+            set { episodesBySeason = value; }
+        }
 
         private TvMazeEpisode[][] episodes;
         private int seasons;
         private string summary;
+        private Dictionary<int, int> episodesBySeason;
 
         internal void SetEpisodes(TvMazeEpisode[] tvMazeEpisode)
         {
-            var seasonHisto = CountEpisodesBySeason(tvMazeEpisode);
+            episodesBySeason = CountEpisodesBySeason(tvMazeEpisode);
 
-            episodes = new TvMazeEpisode[seasonHisto.Count][];
+            episodes = new TvMazeEpisode[episodesBySeason.Count][];
 
-            foreach (var item in seasonHisto)
+            foreach (var item in episodesBySeason)
             {
                 episodes[item.Key - 1] = new TvMazeEpisode[item.Value];
             }
