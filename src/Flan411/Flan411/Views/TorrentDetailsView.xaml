@@ -5,21 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flan411.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <!--<StackPanel Orientation="Horizontal" Grid.Row="0">-->
-        <Image x:Name="posterImage" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center" Margin="10,10,0,0" Source="https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2ODAwNTYwOV5BMl5BanBnXkFtZTcwMjU4OTg3OA@@._V1_SX300.jpg"/>
-        <TextBlock x:Name="textBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" Margin="10,10,0,0">
-            Avatar Korra fights to keep Republic City safe from the evil forces of both the physical and spiritual worlds.
-        </TextBlock>
-        <!--</StackPanel>-->
-    </Grid>
+             d:DesignHeight="300" d:DesignWidth="300"
+             Visibility="Hidden"
+             >
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="16" Text="{Binding Name}" TextWrapping="WrapWithOverflow" FontWeight="Bold" Margin="0,0,0,20" />
+            <Button Name="dlButton" Click="dlButton_Click" Margin="0,0,0,20">Download</Button>
+            <WebBrowser Name="wb"></WebBrowser>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

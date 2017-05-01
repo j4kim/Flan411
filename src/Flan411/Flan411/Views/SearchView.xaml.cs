@@ -15,8 +15,10 @@ namespace Flan411.Views
         public SearchView()
         {
             InitializeComponent();
-            searchTvShowBtn.Click += SearchButton_Click;
+            searchButton.Click += SearchButton_Click;
             Loaded += OnLoaded;
+
+            torrentListView.TorrentDetailsView = torrentDetailsView;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -43,25 +45,9 @@ namespace Flan411.Views
             {
                 return;
             }
-
-            //var torrentsList = await T411Service.Search(searchInput.Text);
-
-            await TvMazeService.Search(searchInput.Text);
-
-            List<Torrent> torrentsList = new List<Torrent>
-            {
-                new Torrent {Name="The Walking Dead s01e01", Added="12/12/2012", Category="TV Show", CategoryName="Gore", Id="12", Leechers="2450", Seeders="5000", Size="2000000000"},
-                new Torrent {Name="The Walking Dead s01e02", Added="12/12/2012", Category="TV Show", CategoryName="Gore", Id="13", Leechers="2450", Seeders="5000", Size="2000000000"},
-                new Torrent {Name="The Walking Dead s01e03", Added="12/12/2012", Category="TV Show", CategoryName="Gore", Id="14", Leechers="2450", Seeders="5000", Size="2000000000"}
-            };
-            // DEBUG
-            {
-                foreach (var item in torrentsList)
-                {
-                    Console.WriteLine($"seeders: {item.Seeders}");
-                }
-            }
-
+            DisplayInformationMessage("Waiting for results...");
+            var torrentsList = await T411Service.Search(searchInput.Text);
+            
             if (torrentsList.Count > 0)
             {
                 torrentListView.TorrentList = torrentsList;
