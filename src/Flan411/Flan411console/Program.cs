@@ -12,26 +12,35 @@ namespace Flan411console
     {
         static void Main(string[] args)
         {
-            if (!T411Service.VerifyToken())
-                auth();
-            
-            while (true)
-            {
-                Console.Write("Search: ");
-                string pattern = Console.ReadLine();
+            //if (!T411Service.VerifyToken())
+            //    auth();
 
-                var task = T411Service.Search(pattern);
-                task.Wait();
+            //while (true)
+            //{
+            //Console.Write("Search: ");
+            //string pattern = Console.ReadLine();
 
-                List<Torrent> results = task.Result;
+            //var task = T411Service.Search(pattern);
+            //task.Wait();
 
-                Console.WriteLine("Results: ");
-                foreach (var t in results)
-                {
-                    Console.WriteLine($"{t.Id} : {t.Name}");
-                }
-                Console.WriteLine("---");
-            }
+            //List<Torrent> results = task.Result;
+
+            //Console.WriteLine("Results: ");
+            //foreach (var t in results)
+            //{
+            //    Console.WriteLine($"{t.Id} : {t.Name}");
+            //}
+            //Console.WriteLine("---");
+
+            //const int ID = 4578050;
+            //T411Service.Download(ID, "tamaman.torrent");
+
+            var task = TvMazeService.Search("The walking dead");
+            task.Wait();
+
+            Console.WriteLine("FIN");
+            Console.ReadKey();
+            //}
 
         }
 

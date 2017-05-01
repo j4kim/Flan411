@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -14,6 +16,7 @@ namespace Flan411.Tools
     {
         static private readonly string HOST_NAME = "https://api.t411.ai";
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
+        static private readonly string DOWNLOAD_URL = HOST_NAME + "/torrents/download";
 
         static private readonly string TOKEN_FILENAME = ".token";
         static private string TOKEN = "";
@@ -66,6 +69,42 @@ namespace Flan411.Tools
             }
 
             return null;
+        }
+
+        public static async Task<string> Download(int torrentId, string fileName)
+        {
+            byte[] result;
+            byte[] buffer = new byte[4096];
+
+            WebRequest wr = WebRequest.Create($"{DOWNLOAD_URL}/{torrentId}");
+            wr.Headers.Add("Authorization", TOKEN);
+            wr.ContentType = "application/x-bittorrent";
+
+            using (var response = await wr.GetResponseAsync())
+            {
+                bool gzip = response.Headers["Content-Encoding"] == "gzip";
+                var responseStream = gzip
+                                        ? new GZipStream(response.GetResponseStream(), CompressionMode.Decompress)
+                                        : response.GetResponseStream();
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    int count = 0;
+                    do
+                    {
+                        count = responseStream.Read(buffer, 0, buffer.Length);
+                        memoryStream.Write(buffer, 0, count);
+                    } while (count != 0);
+
+                    result = memoryStream.ToArray();
+
+                    using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Create)))
+                    {
+                        writer.Write(result);
+                    }
+                }
+            }
+            return fileName;
         }
 
         /// <summary>
@@ -148,3 +187,4 @@ namespace Flan411.Tools
         }
     }
 }
+

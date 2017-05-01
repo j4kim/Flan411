@@ -62,10 +62,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Torrent.cs" />
+    <Compile Include="Models\TvMazeTvShowInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Tools\BaseCommand.cs" />
     <Compile Include="Tools\T411Service.cs" />
     <Compile Include="Tools\ObservableObject.cs" />
+    <Compile Include="Tools\TvMazeService.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
