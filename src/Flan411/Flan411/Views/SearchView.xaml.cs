@@ -1,5 +1,6 @@
 ﻿using Flan411.Models;
 using Flan411.Tools;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -46,7 +47,18 @@ namespace Flan411.Views
                 return;
             }
             DisplayInformationMessage("Waiting for results...");
-            var torrentsList = await T411Service.Search(searchInput.Text);
+
+            List<Torrent> torrentsList;
+            try
+            {
+                torrentsList = await T411Service.Search(searchInput.Text);
+            }
+            catch (JsonSerializationException error)
+            {
+                Console.WriteLine(error.Message);
+                torrentsList = new List<Torrent>();
+            }
+            
             
             if (torrentsList.Count > 0)
             {

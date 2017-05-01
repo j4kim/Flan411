@@ -71,7 +71,7 @@ namespace Flan411.Tools
             return null;
         }
 
-        public static async Task<string> Download(int torrentId, string fileName)
+        public static async Task<string> Download(long torrentId, string fileName)
         {
             byte[] result;
             byte[] buffer = new byte[4096];

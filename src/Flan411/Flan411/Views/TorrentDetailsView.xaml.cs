@@ -1,18 +1,8 @@
 ﻿using Flan411.Models;
+using Flan411.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Flan411.Views
 {
@@ -22,6 +12,8 @@ namespace Flan411.Views
     public partial class TorrentDetailsView : UserControl
     {
         private Torrent torrent;
+        private static readonly string FILE_EXTENSION = ".torrent";
+        private static readonly char[] PATH_INVALID_CHARS = System.IO.Path.GetInvalidFileNameChars();
 
         public Torrent Torrent {
             get{ return torrent; }
@@ -43,9 +35,31 @@ namespace Flan411.Views
             // todo: load torrent details in the WebBrowser component 
         }
 
-        private void dlButton_Click(object sender, RoutedEventArgs e)
+        private async void dlButton_Click(object sender, RoutedEventArgs e)
         {
-            // todo
+            
+            String normalizeFileName = String.Join("_", torrent.Name.Split(PATH_INVALID_CHARS, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
+            normalizeFileName += FILE_EXTENSION;
+            Console.WriteLine(normalizeFileName);
+            Console.WriteLine($"Downloading torrent having id {torrent.Id}");
+            try
+            {
+                String savedFileName = await T411Service.Download(Convert.ToInt64(torrent.Id), normalizeFileName);
+                if (savedFileName != String.Empty)
+                {
+                    System.Diagnostics.Process.Start(savedFileName);
+                }
+                else
+                {
+                    MessageBox.Show("An error occured during either the torrent file download or opening.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception error)
+            {
+
+                MessageBox.Show($"{error.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); ;
+            }
+            
         }
     }
 }
