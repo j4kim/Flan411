@@ -21,11 +21,22 @@ namespace Flan411.Views
                 torrentResultList.ItemsSource = torrentList;
             }
         }
+
+        public TorrentDetailsView TorrentDetailsView { get; set; }
+
         private List<Torrent> torrentList;
+
         public TorrentListView()
         {
             InitializeComponent();
             torrentList = new List<Torrent>();
+        }
+
+        private void torrentResultList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Torrent selected = (Torrent) torrentResultList.SelectedItem;
+            if (selected != null)
+                TorrentDetailsView.Torrent = selected;
         }
     }
 }

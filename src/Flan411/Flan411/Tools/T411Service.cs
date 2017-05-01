@@ -12,7 +12,7 @@ namespace Flan411.Tools
 {
     public class T411Service
     {
-        static private readonly string HOST_NAME = "https://api.t411.ai";
+        static private readonly string HOST_NAME = "http://api.t411.ai";
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
 
         static private readonly string TOKEN_FILENAME = ".token";

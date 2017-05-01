@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flan411.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,31 @@ namespace Flan411.Views
     /// </summary>
     public partial class TorrentDetailsView : UserControl
     {
+        private Torrent torrent;
+
+        public Torrent Torrent {
+            get{ return torrent; }
+            set {
+                Visibility = Visibility.Visible;
+                DataContext = torrent = value;
+                setContent(value);
+            }
+        }
+
         public TorrentDetailsView()
         {
             InitializeComponent();
+        }
+
+        private void setContent(Torrent torrent)
+        {
+            // todo: display torrent details in a Grid (DataGrid ?)
+            // todo: load torrent details in the WebBrowser component 
+        }
+
+        private void dlButton_Click(object sender, RoutedEventArgs e)
+        {
+            // todo
         }
     }
 }

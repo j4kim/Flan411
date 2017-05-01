@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flan411.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer>
-        <Frame x:Name="frame" Content="Frame"/>
+             d:DesignHeight="300" d:DesignWidth="300"
+             Visibility="Hidden"
+             >
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="16" Text="{Binding Name}" TextWrapping="WrapWithOverflow" FontWeight="Bold" Margin="0,0,0,20" />
+            <Button Name="dlButton" Click="dlButton_Click" Margin="0,0,0,20">Download</Button>
+            <WebBrowser Name="wb"></WebBrowser>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -6,50 +6,24 @@
              xmlns:local="clr-namespace:Flan411.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="150"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="400"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Center" Margin="0,0,0,42.4">
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                    <TextBox Name="searchInput" MinWidth="300" MaxWidth="300" Margin="0,50,0,0" MinHeight="30" MaxHeight="30" FontSize="16" />
-                    <Button Name="searchButton" Content="Search" FontWeight="Bold" Margin="10,50,0,0" MinHeight="30" MaxHeight="30" MinWidth="60" MaxWidth="60" FontSize="16" IsDefault="True"/>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-        <local:TorrentListView x:Name="torrentListView" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0"></local:TorrentListView>
-        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-            <TextBlock Name="informationText" >
-                No torrents found
-            </TextBlock>
-        </StackPanel>
-        <local:TorrentDetailsView Grid.Column="1"  Grid.Row="0" Grid.RowSpan="2"></local:TorrentDetailsView>
-    </Grid>-->
     <Grid Margin="10">
         <DockPanel >
             <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,10">
                 <TextBox Name="searchInput" Width="200" ToolTip="Game of Thrones" />
-                <Button Name="searchButton" Width="60" Content="Search" />
+                <Button Name="searchButton" Width="60" Content="Search" IsDefault="True"  />
             </WrapPanel>
-            <local:TorrentListView x:Name="torrentListView" DockPanel.Dock="Left"></local:TorrentListView>
-            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <TextBlock Name="informationText" >
-                No torrents found
+                    No torrents found
                 </TextBlock>
-            </StackPanel>
-            <local:TorrentDetailsView DockPanel.Dock="Right" Margin="10,0,0,0"></local:TorrentDetailsView>
+                <local:TorrentListView x:Name="torrentListView"></local:TorrentListView>
+                <local:TorrentDetailsView x:Name="torrentDetailsView" Margin="10,0,0,0" Grid.Column="1"></local:TorrentDetailsView>
+                <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Left" Width="5" Grid.Column="1"/>
+            </Grid>
         </DockPanel>
     </Grid>
     

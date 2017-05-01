@@ -15,6 +15,8 @@ namespace Flan411.Views
             InitializeComponent();
             searchButton.Click += SearchButton_Click;
             Loaded += OnLoaded;
+
+            torrentListView.TorrentDetailsView = torrentDetailsView;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -43,14 +45,7 @@ namespace Flan411.Views
             }
 
             var torrentsList = await T411Service.Search(searchInput.Text);
-            // DEBUG
-            {
-                foreach (var item in torrentsList)
-                {
-                    Console.WriteLine($"seeders: {item.Seeders}");
-                }
-            }
-
+            
             if (torrentsList.Count > 0)
             {
                 torrentListView.TorrentList = torrentsList;
