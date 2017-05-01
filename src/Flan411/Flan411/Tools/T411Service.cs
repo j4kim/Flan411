@@ -14,7 +14,7 @@ namespace Flan411.Tools
 {
     public class T411Service
     {
-        static private readonly string HOST_NAME = "https://api.t411.ai";
+        static private readonly string HOST_NAME = "http://api.t411.ai";
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
         static private readonly string DOWNLOAD_URL = HOST_NAME + "/torrents/download";
 
@@ -122,23 +122,21 @@ namespace Flan411.Tools
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
 
                 string options = "?limit=5000";
+
                 string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
+                
+                // DEBUG
+                {
+                    File.WriteAllText("result.json", result.ToString());
+                }
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)
                 {
                     // DEBUG: often SQLSTATE[HY000] [2002] Connection refused
-                    {
-                        Console.WriteLine($"Error in search: {result["error"]}");
-                    }
-                    return torrents;
-                }
-
-                // DEBUG
-                {
-                    File.WriteAllText("result.json", result.ToString());
+                    throw new Exception(result["error"].ToString());
                 }
 
                 foreach (var tor in result["torrents"])
@@ -153,6 +151,7 @@ namespace Flan411.Tools
                         Console.WriteLine(e.Data);
                     }
                 }
+
                 return torrents;
                 // DEBUG in case of API unavailability
                 //{
@@ -181,9 +180,17 @@ namespace Flan411.Tools
                 return false;
             }
             // check token validity
-            // if the token is invalid, the search method will return null
+            // if the token is invalid, the search method will raise an exception
             // maybe we can test with a faster request (get on the user profile, for example)
-            return Search("test") != null;
+            try
+            {
+                Search("test");
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
     }
 }
