@@ -87,17 +87,17 @@ namespace Flan411.Tools
                 string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
+                
+                // DEBUG
+                {
+                    File.WriteAllText("result.json", result.ToString());
+                }
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)
                 {
                     // DEBUG: often SQLSTATE[HY000] [2002] Connection refused
-                    return null;
-                }
-
-                // DEBUG
-                {
-                    File.WriteAllText("result.json", result.ToString());
+                    throw new Exception(result["error"].ToString());
                 }
 
                 foreach (var tor in result["torrents"])
@@ -141,9 +141,17 @@ namespace Flan411.Tools
                 return false;
             }
             // check token validity
-            // if the token is invalid, the search method will return null
+            // if the token is invalid, the search method will raise an exception
             // maybe we can test with a faster request (get on the user profile, for example)
-            return Search("test") != null;
+            try
+            {
+                Search("test");
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
     }
 }

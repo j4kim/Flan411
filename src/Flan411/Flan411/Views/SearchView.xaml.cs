@@ -44,6 +44,7 @@ namespace Flan411.Views
                 return;
             }
 
+            DisplayInformationMessage("Waiting for results...");
             var torrentsList = await T411Service.Search(searchInput.Text);
             
             if (torrentsList.Count > 0)
