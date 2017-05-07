@@ -18,6 +18,7 @@ namespace Flan411.Tools
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
         static private readonly string DOWNLOAD_URL = HOST_NAME + "/torrents/download";
         
+        // Categories IDs, for search filtering
         static public int CID_SERIES = 433;
         static public int CID_MOVIES = 631;
         static public int CID_ANIMATION = 455;
@@ -52,15 +53,7 @@ namespace Flan411.Tools
 
                 if (jsonResponseObject == null)
                 {
-                    throw new Exception($"{typeof(T411Service).Name}::{new StackTrace().GetFrame(1).GetMethod().Name} Error while parsing JSON response.");
-                }
-
-                // DEBUG
-                {
-                    string debugString = typeof(T411Service).Name + "::" + new StackTrace().GetFrame(1).GetMethod().Name;
-                    Console.WriteLine($"{debugString} Code HTTP: {(int)response.StatusCode}");
-                    Console.WriteLine($"{debugString} JSON object code: {jsonResponseObject["code"]}");
-                    Console.WriteLine($"{debugString} Response string:\n{content}");
+                    throw new Exception("Error while parsing JSON response.");
                 }
 
                 // If we get the token, we update the datacontext and return the User model
@@ -116,7 +109,9 @@ namespace Flan411.Tools
         /// Makes a search request on the t411 engine
         /// </summary>
         /// <param name="pattern">The query</param>
-        /// <returns>A list of torrent objects (10 max by default)</returns>
+        /// <param name="limit">The max amount of resluts</param>
+        /// <param name="cid">The category ID, -1 for all categories</param>
+        /// <returns>A list of Torrent objects</returns>
         public static async Task<List<Torrent>> Search(string pattern, int limit=5000, int cid=-1)
         {
             using (var httpClient = new HttpClient())
@@ -130,10 +125,8 @@ namespace Flan411.Tools
                 if(cid != -1)
                     // category id : Série TV -> 433, Film -> 631, Animation -> 455, Série animée -> 637
                     options += $"&cid={cid}";
-
-                // todo: comprendre pourquoi ceci bloque
-                //var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
-                var strResult = httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}").Result;
+                
+                var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
                 
@@ -176,6 +169,11 @@ namespace Flan411.Tools
             }
         }
 
+        /// <summary>
+        /// Get the detail of a particular torrent.
+        /// </summary>
+        /// <param name="id">The id of the torrent</param>
+        /// <returns>A TorrentDetail object containing an HTML formatted description</returns>
         public static async Task<TorrentDetail> Details(int id)
         {
             using (var httpClient = new HttpClient())
@@ -184,9 +182,9 @@ namespace Flan411.Tools
                 string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/details/{id}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
-                TorrentDetail torrent = result.ToObject<TorrentDetail>();
+                TorrentDetail torrentDetail = result.ToObject<TorrentDetail>();
 
-                return torrent;
+                return torrentDetail;
             }
         }
 
@@ -205,18 +203,30 @@ namespace Flan411.Tools
             {
                 return false;
             }
-            // check token validity
-            // if the token is invalid, the search method will raise an exception
-            // maybe we can test with a faster request (get on the user profile, for example)
-            try
+
+            return TestAPI();
+        }
+
+        /// <summary>
+        /// Check token validity by performing a simple synchronous search request
+        /// </summary>
+        /// <returns>false if there is a "error" field in the json response from the api, true otherwise</returns>
+        public static bool TestAPI()
+        {
+            using (var httpClient = new HttpClient())
             {
-                Search("query without results").Wait();
-                return true;
-            }
-            catch(AggregateException e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                return false;
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", TOKEN);
+                var strResult = httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/query with no results").Result;
+
+                JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
+
+                if (result["error"] != null)
+                {
+                    Console.WriteLine(result["error"]);
+                    return false;
+                }
+
+                 return true;
             }
         }
     }
