@@ -14,7 +14,10 @@ namespace Flan411.Tools
 {
     public class T411Service
     {
-        static private readonly string HOST_NAME = "http://api.t411.al";
+        static private readonly string DEFAULT_HOST_NAME = "https://api.t411.al";
+        static private readonly string HOST_NAME_FILENAME = "api_hostname.txt";
+        static private readonly string HOST_NAME = getHostName();
+
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
         static private readonly string DOWNLOAD_URL = HOST_NAME + "/torrents/download";
         
@@ -26,6 +29,20 @@ namespace Flan411.Tools
 
         static private readonly string TOKEN_FILENAME = ".token";
         static private string TOKEN = "";
+
+        
+        private static string getHostName()
+        {
+            try
+            {
+                return File.ReadAllText(HOST_NAME_FILENAME);
+            }
+            catch (FileNotFoundException)
+            {
+                File.WriteAllText(HOST_NAME_FILENAME, DEFAULT_HOST_NAME);
+                return DEFAULT_HOST_NAME;
+            }
+        }
 
         /// <summary>
         /// Authenticates the user to the T411 API and updates the window's datacontext with the user's information.
