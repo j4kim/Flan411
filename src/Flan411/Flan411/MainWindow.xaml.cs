@@ -20,7 +20,7 @@ namespace Flan411
              * if no credentials are found selectedViweModel = LoginViewModel. Else,
              * selectedViweModel = SearchViewModel.
              **/
-            if (T411Service.VerifyToken() != true)
+            if (!T411Service.VerifyToken())
             {
                 navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
             }

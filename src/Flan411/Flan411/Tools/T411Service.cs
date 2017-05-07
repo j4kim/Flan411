@@ -14,9 +14,14 @@ namespace Flan411.Tools
 {
     public class T411Service
     {
-        static private readonly string HOST_NAME = "http://api.t411.ai";
+        static private readonly string HOST_NAME = "http://api.t411.al";
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
         static private readonly string DOWNLOAD_URL = HOST_NAME + "/torrents/download";
+        
+        static public int CID_SERIES = 433;
+        static public int CID_MOVIES = 631;
+        static public int CID_ANIMATION = 455;
+        static public int CID_SERIES_ANIM = 637;
 
         static private readonly string TOKEN_FILENAME = ".token";
         static private string TOKEN = "";
@@ -124,9 +129,11 @@ namespace Flan411.Tools
                 string options = $"?limit={limit}";
                 if(cid != -1)
                     // category id : Série TV -> 433, Film -> 631, Animation -> 455, Série animée -> 637
-                    options += $"&cid={cid}"; 
+                    options += $"&cid={cid}";
 
-                string strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
+                // todo: comprendre pourquoi ceci bloque
+                // var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
+                var strResult = httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}").Result;
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
                 
@@ -140,6 +147,7 @@ namespace Flan411.Tools
                 {
                     // DEBUG: often SQLSTATE[HY000] [2002] Connection refused
                     throw new Exception(result["error"].ToString());
+                    //return null;
                 }
 
                 foreach (var tor in result["torrents"])
@@ -202,11 +210,12 @@ namespace Flan411.Tools
             // maybe we can test with a faster request (get on the user profile, for example)
             try
             {
-                Search("test",1);
+                Search("query without results").Wait();
                 return true;
             }
-            catch(Exception e)
+            catch(AggregateException e)
             {
+                Console.WriteLine(e.InnerException.Message);
                 return false;
             }
         }
