@@ -8,11 +8,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+        <StackPanel Name="orderbyPanel" DockPanel.Dock="Top" Orientation="Horizontal">
             <TextBlock>Order by:</TextBlock>
-            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Size" IsChecked="True"/>
-            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Date"/>
-            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Seeders"/>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Smallest size" Checked="RadioButton_Checked"/>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Most recent" Checked="RadioButton_Checked"/>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Most seeded" Checked="RadioButton_Checked"/>
         </StackPanel>
         <Separator></Separator>
         <ListBox DockPanel.Dock="Bottom" Name="torrentResultList" HorizontalContentAlignment="Stretch" SelectionChanged="torrentResultList_SelectionChanged">

@@ -59,8 +59,6 @@ namespace Flan411.Views
                 Console.WriteLine(error.Message);
                 torrentsList = new List<Torrent>();
             }
-
-            torrentsList = torrentsList.OrderBy(o => o.Name).ToList();
             
             
             if (torrentsList.Count > 0)

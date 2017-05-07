@@ -132,7 +132,7 @@ namespace Flan411.Tools
                     options += $"&cid={cid}";
 
                 // todo: comprendre pourquoi ceci bloque
-                // var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
+                //var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
                 var strResult = httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}").Result;
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
