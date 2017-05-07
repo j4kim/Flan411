@@ -7,8 +7,15 @@
              xmlns:viewModels="clr-namespace:Flan411.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <ListBox Name="torrentResultList" HorizontalContentAlignment="Stretch" SelectionChanged="torrentResultList_SelectionChanged">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock>Order by:</TextBlock>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Size" IsChecked="True"/>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Date"/>
+            <RadioButton Margin="10,0,0,0" GroupName="Order" Content="Seeders"/>
+        </StackPanel>
+        <Separator></Separator>
+        <ListBox DockPanel.Dock="Bottom" Name="torrentResultList" HorizontalContentAlignment="Stretch" SelectionChanged="torrentResultList_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -24,5 +31,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+    </DockPanel>
 </UserControl>
