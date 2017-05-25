@@ -29,7 +29,7 @@ namespace Flan411.Tools
         static public int CID_ANIMATION = 455;
         static public int CID_SERIES_ANIM = 637;
 
-        static private readonly string TOKEN_FILENAME = ".token";
+        static private readonly string TOKEN_FILENAME = Path.Combine(APP_FOLDER, ".token");
         static private string TOKEN = "";
 
         private static string getAppFolder()
