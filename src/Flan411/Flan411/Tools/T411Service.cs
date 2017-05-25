@@ -14,8 +14,10 @@ namespace Flan411.Tools
 {
     public class T411Service
     {
+        static private readonly string APP_FOLDER = getAppFolder();
+
         static private readonly string DEFAULT_HOST_NAME = "https://api.t411.al";
-        static private readonly string HOST_NAME_FILENAME = "api_hostname.txt";
+        static private readonly string HOST_NAME_FILENAME = Path.Combine(APP_FOLDER, "api_hostname.txt");
         static private readonly string HOST_NAME = getHostName();
 
         static private readonly string AUTHENTICATION_URL = HOST_NAME + "/auth";
@@ -30,7 +32,20 @@ namespace Flan411.Tools
         static private readonly string TOKEN_FILENAME = ".token";
         static private string TOKEN = "";
 
-        
+        private static string getAppFolder()
+        {
+            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            appdata = Path.Combine(appdata, "Flan411");
+            if (!Directory.Exists(appdata))
+                Directory.CreateDirectory(appdata);
+
+            string torrentsPath = Path.Combine(appdata, "torrents");
+            if (!Directory.Exists(torrentsPath))
+                Directory.CreateDirectory(torrentsPath);
+
+            return appdata;
+        }
+
         private static string getHostName()
         {
             try
@@ -113,6 +128,7 @@ namespace Flan411.Tools
 
                     result = memoryStream.ToArray();
 
+                    fileName = Path.Combine(APP_FOLDER, "torrents", fileName);
                     using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Create)))
                     {
                         writer.Write(result);
@@ -146,9 +162,9 @@ namespace Flan411.Tools
                 var strResult = await httpClient.GetStringAsync($"{HOST_NAME}/torrents/search/{pattern}{options}");
 
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
-                
+
                 // DEBUG
-                //File.WriteAllText("result.json", result.ToString());
+                //File.WriteAllText(Path.Combine(APP_FOLDER, "result.json"), result.ToString());
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)
