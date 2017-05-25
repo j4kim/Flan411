@@ -148,9 +148,7 @@ namespace Flan411.Tools
                 JObject result = JsonConvert.DeserializeObject(strResult) as JObject;
                 
                 // DEBUG
-                {
-                    File.WriteAllText("result.json", result.ToString());
-                }
+                //File.WriteAllText("result.json", result.ToString());
 
                 // the error field occurs if the token is invalid
                 if (result["error"] != null)

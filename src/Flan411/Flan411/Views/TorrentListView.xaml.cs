@@ -24,7 +24,6 @@ namespace Flan411.Views
         }
 
         public TorrentDetailsView TorrentDetailsView { get; set; }
-        public string Order { get; set; }
 
         private List<Torrent> torrentList;
 
@@ -43,10 +42,14 @@ namespace Flan411.Views
 
         private void RadioButton_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-            var rb = (RadioButton)sender;
-            Order = rb.Content.ToString();
-            if (TorrentList == null) return;
-            switch (Order)
+            Sort();
+        }
+
+        public void Sort()
+        {
+            var selected = orderbyPanel.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.Value);
+            if (selected == null || TorrentList == null) return;
+            switch (selected.Content.ToString())
             {
                 case "Smallest size":
                     TorrentList = TorrentList.OrderBy(t => t.SizeMB).ToList();

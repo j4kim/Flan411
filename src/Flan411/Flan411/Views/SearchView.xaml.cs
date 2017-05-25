@@ -3,7 +3,6 @@ using Flan411.Tools;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -64,6 +63,7 @@ namespace Flan411.Views
             if (torrentsList.Count > 0)
             {
                 torrentListView.TorrentList = torrentsList;
+                torrentListView.Sort();
                 DisplayTorrentsList();
             }
             else
